@@ -1,0 +1,32 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:ecomdb
+    username: sa
+    password:
+    driverClassName: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  #Accessing the H2 Console (http://localhost:8080/api/h2-console)
+  h2:
+    console:
+      enabled: true
+  app:
+    jwtSecret: "SsfDgU3H9uVMv3IwDO4TI2JOcfspqciO+msnO76d5tE="
+    jwtExpirationMs: 3000000
+
+logging:
+  level:
+    root: debug
+
+server:
+  servlet:
+    context-path: /api
+
+product:
+  image:
+    upload:
+      path: "src/main/resources/uploads/products/images/"

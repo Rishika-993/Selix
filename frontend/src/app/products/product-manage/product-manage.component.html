@@ -1,0 +1,31 @@
+<div class="container py-4">
+    <h2 class="mb-4">🛠️ Manage Products</h2>
+  
+    <div *ngIf="loading" class="text-center my-5">
+      <div class="spinner-border text-primary"></div>
+      <p class="mt-2">Loading your products...</p>
+    </div>
+  
+    <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+  
+    <div class="row row-cols-1 row-cols-md-3 g-4" *ngIf="!loading && products.length > 0">
+      <div class="col" *ngFor="let product of products">
+        <div class="card h-100 shadow-sm">
+          <img [src]="product.productImage || 'https://via.placeholder.com/300'" class="card-img-top" alt="{{ product.productName }}">
+          <div class="card-body">
+            <h5 class="card-title">{{ product.productName }}</h5>
+            <p class="card-text">{{ product.description }}</p>
+          </div>
+          <div class="card-footer d-flex justify-content-between">
+            <button class="btn btn-outline-primary btn-sm" [routerLink]="['/products/edit', product.productId]">✏️ Edit</button>
+            <button class="btn btn-outline-danger btn-sm" (click)="deleteProduct(product.productId)">🗑️ Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div *ngIf="!loading && products.length === 0" class="text-center text-muted py-4">
+      No products found.
+    </div>
+  </div>
+  

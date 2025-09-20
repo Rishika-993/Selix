@@ -1,0 +1,70 @@
+<div class="container py-4" *ngIf="!loading">
+    <h2 class="mb-4">🧾 Order Summary</h2>
+
+    <table class="table">
+        <thead class="table-light">
+            <tr>
+                <th>Product</th>
+                <th>Qty</th>
+                <th>Price</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let product of cart.products">
+                <td>{{ product.productName }}</td>
+                <td>{{ product.quantity }}</td>
+                <td>₹{{ product.specialPrice }}</td>
+                <td>₹{{ product.quantity * product.specialPrice }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="text-end mb-3">
+        <h5>Total: ₹{{ cart.totalPrice }}</h5>
+    </div>
+
+    <div class="mt-4">
+        <h5>Select Delivery Address</h5>
+        <div *ngIf="addresses.length === 0" class="alert alert-warning">
+            No saved addresses found. Please add one in your profile.
+        </div>
+
+        <div *ngFor="let addr of addresses" class="form-check mb-2">
+            <input class="form-check-input" type="radio" [value]="addr.addressId" name="selectedAddress"
+                [(ngModel)]="selectedAddressId" [id]="'addr' + addr.addressId" />
+
+            <label class="form-check-label" [for]="'addr' + addr.addressId">
+                {{ addr.buildingName }}, {{ addr.street }}, {{ addr.city }} - {{ addr.pincode }}
+            </label>
+        </div>
+
+        <div class="mt-4">
+            <label class="form-label fw-bold">Select Payment Method</label>
+            <select class="form-select" [(ngModel)]="paymentMethod">
+              <option value="cash">Cash On Delivery</option>
+              <option value="cart">Cart Wallet</option>
+              <option value="online">Online Payment</option>
+            </select>
+          </div>
+          
+          <!-- Optional: Show PG fields only for online -->
+          <div *ngIf="paymentMethod === 'online'" class="mt-3">
+            <label class="form-label">Payment Gateway Name</label>
+            <input class="form-control mb-2" [(ngModel)]="pgName" placeholder="e.g. PayPal" />
+            
+            <label class="form-label">Payment ID</label>
+            <input class="form-control mb-2" [(ngModel)]="pgPaymentId" placeholder="e.g. PAYID-12345" />
+          
+            <label class="form-label">Payment Status</label>
+            <input class="form-control mb-2" [(ngModel)]="pgStatus" placeholder="e.g. SUCCESS" />
+          
+            <label class="form-label">Payment Message</label>
+            <input class="form-control mb-2" [(ngModel)]="pgResponseMessage" placeholder="Payment successful!" />
+          </div>
+          
+
+        <div class="text-end">
+            <button class="btn btn-success" (click)="placeOrder()">📦 Place Order</button>
+        </div>
+    </div>

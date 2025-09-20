@@ -1,0 +1,49 @@
+<div class="container py-4">
+    <h3 class="mb-4">➕ Create New Product</h3>
+    <form (ngSubmit)="createProduct()" #form="ngForm" class="row g-3">
+  
+      <div class="col-md-6">
+        <label class="form-label">Product Name</label>
+        <input type="text" class="form-control" [(ngModel)]="product.productName" name="productName" required />
+      </div>
+  
+      <div class="col-md-6">
+        <label class="form-label">Category</label>
+        <select class="form-select" [(ngModel)]="product.categoryId" name="categoryId" required>
+          <option value="" disabled selected>-- Select Category --</option>
+          <option *ngFor="let cat of categories" [value]="cat.categoryId">{{ cat.categoryName }}</option>
+        </select>
+      </div>
+  
+      <div class="col-md-6">
+        <label class="form-label">Price (₹)</label>
+        <input type="number" class="form-control" [(ngModel)]="product.price" name="price" required />
+      </div>
+  
+      <!-- <div class="col-md-6">
+        <label class="form-label">Special Price (₹)</label>
+        <input type="number" class="form-control" [(ngModel)]="product.specialPrice" name="specialPrice" />
+      </div> -->
+      <div class="col-md-6">
+        <label class="form-label">Discount</label>
+        <input type="number" class="form-control" [(ngModel)]="product.discount" name="discount" />
+      </div>
+  
+      <div class="col-md-12">
+        <label class="form-label">Description</label>
+        <textarea class="form-control" rows="3" [(ngModel)]="product.description" name="description"></textarea>
+      </div>
+  
+      <div class="col-md-12">
+        <label class="form-label">Image URL</label>
+        <input type="text" class="form-control" [(ngModel)]="product.productImage" name="productImage" />
+      </div>
+  
+      <div class="col-12">
+        <button class="btn btn-primary" [disabled]="form.invalid">
+          <i class="bi bi-check-circle me-1"></i> Create Product
+        </button>
+      </div>
+    </form>
+  </div>
+  

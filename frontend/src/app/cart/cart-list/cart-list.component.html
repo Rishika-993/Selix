@@ -1,0 +1,53 @@
+<div class="container py-4">
+  <h2 class="mb-4">🛒 Your Cart</h2>
+
+  <div *ngIf="loading" class="text-center my-5">
+    <div class="spinner-border text-primary"></div>
+    <p>Loading cart...</p>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+  <div *ngIf="cart?.products?.length > 0" class="table-responsive">
+    <table class="table align-middle">
+      <thead class="table-dark">
+        <tr>
+          <th>Product</th>
+          <th>Price (₹)</th>
+          <th>Quantity</th>
+          <th>Total</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of cart.products">
+          <td class="d-flex align-items-center gap-2">
+            <img [src]="product.productImage" width="60" height="60" class="rounded border" />
+            {{ product.productName }}
+          </td>
+          <td>{{ product.specialPrice }}</td>
+          <td>
+            <div class="d-flex align-items-center">
+              <button class="btn btn-sm btn-outline-secondary me-1" (click)="updateQuantity(product.productId, 'delete')">−</button>
+              <span>{{ product.quantity }}</span>
+              <button class="btn btn-sm btn-outline-secondary ms-1" (click)="updateQuantity(product.productId, 'add')">+</button>
+            </div>
+          </td>
+          <td>₹{{ product.quantity * product.specialPrice }}</td>
+          <td>
+            <button class="btn btn-sm btn-outline-danger" (click)="removeFromCart(product.productId)">🗑️</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="text-end mt-3">
+      <h4>Total: ₹{{ cart.totalPrice }}</h4>
+      <button class="btn btn-primary mt-2" routerLink="/orders">Proceed to Checkout</button>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && cart?.products?.length === 0" class="alert alert-info text-center">
+    Your cart is empty.
+  </div>
+</div>

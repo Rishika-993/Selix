@@ -1,0 +1,42 @@
+<div class="container py-5">
+    <h2 class="text-center mb-5 fw-bold">🤍 My Wishlist</h2>
+
+    <!-- Loading State -->
+    <div *ngIf="loading" class="text-center">
+        <div class="spinner-border text-primary"></div>
+        <p class="mt-3">Loading your wishlist...</p>
+    </div>
+
+    <!-- Empty Wishlist -->
+    <div *ngIf="!loading && wishlistItems.length === 0" class="alert alert-info text-center">
+        Your wishlist is empty. Start adding products you love!
+    </div>
+
+    <!-- Wishlist Table -->
+    <div *ngIf="!loading && wishlistItems.length > 0" class="table-responsive">
+        <table class="table align-middle table-hover table-borderless">
+            <thead class="table-light">
+                <tr>
+                    <th scope="col">Product Image</th>
+                    <th scope="col">Product Name</th>
+                    <!-- <th scope="col">Price</th> -->
+                    <th scope="col">Remove</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of wishlistItems">
+                    <td style="width: 400px;">
+                        <img [src]="item.productImageUrl" alt="Product Image" class="img-fluid rounded" style="width: 80px; height: auto;">
+                    </td>
+                    <td class="fw-semibold">{{ item.productName }}</td>
+                    <!-- <td class="text-primary fw-bold">₹ {{ item.price }}</td> -->
+                    <td>
+                        <button class="btn btn-sm btn-outline-danger" (click)="removeFromWishlist(item.productId)">
+                            <i class="bi bi-trash3"></i> Remove
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

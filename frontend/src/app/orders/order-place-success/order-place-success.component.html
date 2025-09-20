@@ -1,0 +1,29 @@
+<!-- <div class="container text-center py-5">
+  <h1 class="text-success">🎉 Payment Successful!</h1>
+  <p>Your order is being placed...</p>
+  <div class="spinner-border text-success mt-3"></div>
+</div> -->
+
+<div class="container text-center py-5">
+  <!-- Success Message -->
+  <h1 class="text-success">🎉 Payment Successful!</h1>
+  <p class="mb-3">Thank you for your purchase! Your order is being processed.</p>
+
+  <!-- Order ID / Summary (Optional) -->
+  <div class="mb-3">
+    <!-- <p>Order ID: <strong>#{{ orderId }}</strong></p> -->
+    <!-- <p>Estimated Delivery: <strong>{{ estimatedDeliveryDate }}</strong></p> -->
+    <p>Order ID: <strong>1</strong></p>
+    <p>Estimated Delivery: <strong>{{ 1 }}</strong></p>
+  </div>
+
+  <!-- Loading Spinner -->
+  <div class="spinner-border text-success mt-3"></div>
+  <p class="mt-2">Your order is being placed...</p>
+
+  <!-- Navigation Buttons -->
+  <div class="mt-4">
+    <button class="btn btn-primary me-2" routerLink="/orders">View Orders</button>
+    <button class="btn btn-outline-primary" routerLink="/shop">Continue Shopping</button>
+  </div>
+</div>

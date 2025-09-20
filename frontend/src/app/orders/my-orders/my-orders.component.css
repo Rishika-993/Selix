@@ -1,0 +1,55 @@
+.card {
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.card-title {
+    font-weight: 600;
+    font-size: 1.25rem;
+}
+
+.card-body p {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.list-group-item {
+    border: none;
+    padding: 1rem;
+}
+
+.list-group-item:hover {
+    background-color: #f8f9fa;
+}
+
+.badge {
+    font-size: 0.875rem;
+}
+
+img {
+    object-fit: cover;
+}
+
+.text-end {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.alert-info {
+    font-size: 1.1rem;
+    color: #17a2b8;
+}
+
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+}
+
+.text-center {
+    font-size: 1.1rem;
+    color: #007bff;
+}

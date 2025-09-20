@@ -1,0 +1,108 @@
+<div class="container py-5" *ngIf="!loading">
+    <h3 class="mb-4">👤 User Profile</h3>
+
+    <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+    <form (ngSubmit)="updateProfile()" class="row g-4">
+        <div class="col-md-6">
+            <label class="form-label">Username</label>
+            <input type="text" class="form-control" [(ngModel)]="updatedUser.userName" name="userName" required />
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" [(ngModel)]="updatedUser.email" name="email" required />
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Roles</label>
+            <div class="form-control bg-light">
+                <span *ngFor="let role of user.roles" class="badge bg-secondary me-1">
+                    {{ role.roleName }}
+                </span>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-save me-2"></i> Update Profile
+            </button>
+        </div>
+    </form>
+
+    <hr class="my-5" />
+
+    <h4>📬 Saved Addresses</h4>
+
+    <div class="row g-3 mt-3" *ngFor="let addr of addresses">
+        <div class="col-md-10">
+            <div class="border rounded p-3 bg-light">
+                <div><strong>{{ addr.buildingName }}</strong>, {{ addr.street }}</div>
+                <div>{{ addr.city }}, {{ addr.state }}, {{ addr.country }} - {{ addr.pincode }}</div>
+            </div>
+        </div>
+        <div class="col-md-2 d-flex align-items-center">
+            <button class="btn btn-sm btn-outline-danger" (click)="confirmDeleteAddress(addr.addressId)">
+                <i class="bi bi-trash"></i> Delete
+            </button>
+        </div>
+    </div>
+
+    <hr class="my-5" />
+
+    <h4 class="mb-3">➕ Add New Address</h4>
+    <form (ngSubmit)="addAddress()" class="row g-3">
+        <div class="col-md-6">
+            <input class="form-control" [(ngModel)]="newAddress.buildingName" name="buildingName"
+                placeholder="Building Name" required />
+        </div>
+        <div class="col-md-6">
+            <input class="form-control" [(ngModel)]="newAddress.street" name="street" placeholder="Street" required />
+        </div>
+        <div class="col-md-4">
+            <input class="form-control" [(ngModel)]="newAddress.city" name="city" placeholder="City" required />
+        </div>
+        <div class="col-md-4">
+            <input class="form-control" [(ngModel)]="newAddress.state" name="state" placeholder="State" required />
+        </div>
+        <div class="col-md-4">
+            <input class="form-control" [(ngModel)]="newAddress.country" name="country" placeholder="Country"
+                required />
+        </div>
+        <div class="col-md-4">
+            <input class="form-control" [(ngModel)]="newAddress.pincode" name="pincode" placeholder="Pincode"
+                required />
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-success">
+                <i class="bi bi-plus-circle me-1"></i> Add Address
+            </button>
+        </div>
+    </form>
+
+</div>
+
+<div *ngIf="loading" class="text-center my-5">
+    <div class="spinner-border text-primary"></div>
+    <p class="mt-2">Loading profile...</p>
+</div>
+
+<!-- Delete confirmation modal -->
+<div *ngIf="showDeleteConfirmation" class="modal fade show d-block" tabindex="-1" style="display: block;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm Deletion</h5>
+                <button type="button" class="btn-close" (click)="cancelDelete()"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this address?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="cancelDelete()">Cancel</button>
+                <button type="button" class="btn btn-danger" (click)="deleteAddress(deleteAddressId)">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>

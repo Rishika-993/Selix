@@ -1,0 +1,142 @@
+<div class="container py-4">
+  <!-- <h2 class="mb-4">🛍️ All Products</h2> -->
+
+   <!-- 🧭 Category Tabs -->
+<div class="mb-4 overflow-auto pb-2">
+  <div class="nav nav-pills gap-2 flex-nowrap">
+    <button
+      class="btn btn-sm"
+      [ngClass]="{
+        'btn-primary': selectedCategoryId === null,
+        'btn-outline-primary': selectedCategoryId !== null
+      }"
+      (click)="filterByCategory(null)"
+    >
+      All Products
+    </button>
+
+    <button
+      class="btn btn-sm"
+      *ngFor="let cat of categories"
+      [ngClass]="{
+        'btn-primary': selectedCategoryId === cat.categoryId,
+        'btn-outline-primary': selectedCategoryId !== cat.categoryId
+      }"
+      (click)="filterByCategory(cat.categoryId)"
+    >
+      {{ cat.categoryName }}
+    </button>
+  </div>
+</div>
+
+
+  <!-- 🔽 Page Size Selector -->
+<div class="d-flex justify-content-end align-items-center mb-3">
+  <label for="pageSizeSelect" class="form-label me-2 mb-0 fw-semibold">Show:</label>
+  <select
+    id="pageSizeSelect"
+    class="form-select form-select-sm w-auto"
+    [(ngModel)]="size"
+    (change)="onPageSizeChange()"
+  >
+    <option *ngFor="let s of pageSizeOptions" [value]="s">{{ s }}</option>
+  </select>
+  <span class="ms-2">per page</span>
+</div>
+
+
+  <!-- 🔄 Loading Spinner -->
+  <div *ngIf="loading" class="text-center my-5">
+    <div class="spinner-border text-primary" role="status"></div>
+    <p class="mt-2">Loading products...</p>
+  </div>
+
+  <!-- ❌ Error Alert -->
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+  <!-- 🧺 Product Cards -->
+  <div class="row row-cols-1 row-cols-md-3 g-4" *ngIf="!loading && products.length > 0">
+    <!-- <div class="col" *ngFor="let product of products">
+      <div class="card h-100 shadow-sm border-0">
+
+        <img [src]="product.productImage || 'https://via.placeholder.com/300'" 
+        [alt]="product.productName"
+        loading="lazy"
+        class="card-img-top product-image" />   
+
+        <div class="card-body">
+          <h5 class="card-title">{{ product.productName }}</h5>
+          <p class="card-text text-muted" style="min-height: 60px">{{ product.description }}</p>
+        </div>
+        <div class="card-footer bg-white border-0 d-flex justify-content-between align-items-center">
+          <span class="fw-bold text-success fs-6">₹{{ product.specialPrice || product.price }}</span>
+          <button class="btn btn-sm btn-outline-primary" (click)="addToCart(product.productId)">
+            <i class="bi bi-cart-plus"></i> Add
+          </button>
+        </div>
+      </div>
+    </div> -->
+    <div class="col" *ngFor="let product of products">
+      <div class="card h-100 shadow-sm border-0 position-relative">
+    
+        <!-- ❤️ Wishlist Icon -->
+        <button class="btn btn-sm position-absolute top-0 end-0 m-2 text-danger bg-white rounded-circle shadow"
+                (click)="addToWishlist(product.productId)">
+          <i class="bi bi-heart"></i>
+        </button>
+    
+        <!-- 📸 Product Image -->
+        <img [src]="product.productImage || 'https://via.placeholder.com/300'" 
+             [alt]="product.productName"
+             loading="lazy"
+             class="card-img-top product-image" />
+    
+        <div class="card-body">
+          <h5 class="card-title">{{ product.productName }}</h5>
+          <p class="card-text text-muted" style="min-height: 60px">{{ product.description }}</p>
+        </div>
+    
+        <!-- 💰 Price & Actions -->
+        <div class="card-footer bg-white border-0 d-flex justify-content-between align-items-center flex-wrap gap-2">
+          <span class="fw-bold text-success fs-6">₹{{ product.specialPrice || product.price }}</span>
+          <div class="d-flex gap-1">
+            <button class="btn btn-sm btn-outline-primary" (click)="addToCart(product.productId)">
+              <i class="bi bi-cart-plus"></i> Add
+            </button>
+            <button class="btn btn-sm btn-primary" (click)="buyNow(product.productId)">
+              <i class="bi bi-lightning-fill"></i> Buy Now
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+  <!-- ℹ️ No Products -->
+  <div *ngIf="!loading && products.length === 0" class="alert alert-info text-center mt-4">
+    No products found.
+  </div>
+
+  <!-- 📄 Pagination -->
+  <nav *ngIf="totalPages > 1 && !loading" class="mt-4">
+    <ul class="pagination justify-content-center">
+      <li class="page-item" [class.disabled]="page === 0">
+        <button class="page-link" (click)="goToPage(page - 1)">Previous</button>
+      </li>
+
+      <li
+        class="page-item"
+        *ngFor="let p of [].constructor(totalPages); let i = index"
+        [class.active]="i === page"
+      >
+        <button class="page-link" (click)="goToPage(i)">{{ i + 1 }}</button>
+      </li>
+
+      <li class="page-item" [class.disabled]="page === totalPages - 1">
+        <button class="page-link" (click)="goToPage(page + 1)">Next</button>
+      </li>
+    </ul>
+  </nav>
+
+</div>
